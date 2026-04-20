@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../routes/app_routes.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -23,7 +25,6 @@ class _LoginScreenState extends State<LoginScreen> {
   // 3️⃣ FUNCTIONS (logic)
   void handleLogin() async {
 
-    // simple validation
     if (email.isEmpty || password.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("Please fill all fields")),
@@ -35,23 +36,27 @@ class _LoginScreenState extends State<LoginScreen> {
       isLoading = true;
     });
 
-    // simulate API call
     await Future.delayed(const Duration(seconds: 2));
 
     setState(() {
       isLoading = false;
     });
 
-    // navigate to home
     Navigator.pushReplacementNamed(context, '/home');
   }
+
+  void handleFacebook() {}
+
+  void handleGoogle() {}
+
+  void handleApple() {}
 
   // 4️⃣ UI
   @override
   Widget build(BuildContext context) {
     return Scaffold(
 
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
 
         child: Column(
@@ -60,13 +65,13 @@ class _LoginScreenState extends State<LoginScreen> {
 
             const SizedBox(height: 150),
 
-              const Text(
-                "Welcome back, glad to see you Again!",
-                style: TextStyle(
-                  fontSize: 40,
-                  fontWeight: FontWeight.bold,
-                ),
+            const Text(
+              "Welcome back, glad to see you Again!",
+              style: TextStyle(
+                fontSize: 40,
+                fontWeight: FontWeight.bold,
               ),
+            ),
 
             const SizedBox(height: 50),
 
@@ -95,15 +100,132 @@ class _LoginScreenState extends State<LoginScreen> {
 
             const SizedBox(height: 20),
 
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                GestureDetector(
+                  onTap: () {},
+                  child: const Text(
+                    "Forgot Password?",
+                    style: TextStyle(
+                      color: Colors.blue,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+
+            const SizedBox(height: 20),
+
             isLoading
                 ? const CircularProgressIndicator()
                 : SizedBox(
+                    height: 60,
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: handleLogin,
-                      child: const Text("Login"),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xff4a7957),
+                        minimumSize: const Size(double.infinity, 60),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18),
+                        ),
+                      ),
+                      child: const Text(
+                        "Login",
+                        style: TextStyle(color: Colors.white),
+                      ),
                     ),
                   ),
+
+            const SizedBox(height: 40),
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text(
+                  "---------------------------------- Or Login With ----------------------------------",
+                ),
+              ],
+            ),
+
+            const SizedBox(height: 35),
+
+            Row(
+              children: [
+
+                // FACEBOOK BUTTON
+                Expanded(
+                  child: OutlinedButton(
+                    onPressed: handleFacebook,
+                    style: OutlinedButton.styleFrom(
+                      backgroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18),
+                      ),
+                    ),
+                    child: const Icon(Icons.facebook),
+                  ),
+                ),
+
+                const SizedBox(width: 10),
+
+                // GOOGLE BUTTON
+                Expanded(
+                  child: OutlinedButton(
+                    onPressed: handleGoogle,
+                    style: OutlinedButton.styleFrom(
+                      backgroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18),
+                      ),
+                    ),
+                    child: const FaIcon(FontAwesomeIcons.google),
+                  ),
+                ),
+
+                const SizedBox(width: 10),
+
+                // APPLE BUTTON
+                Expanded(
+                  child: OutlinedButton(
+                    onPressed: handleApple,
+                    style: OutlinedButton.styleFrom(
+                      backgroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18),
+                      ),
+                    ),
+                    child: const FaIcon(FontAwesomeIcons.apple),
+                  ),
+                ),
+
+              ],
+            ),
+
+            const SizedBox(height: 50),
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text("Don't have an account? "),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pushReplacementNamed(context, AppRoutes.register);
+                  },
+                  child: const Text(
+                    "Register now",
+                    style: TextStyle(
+                      color: Colors.blue,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+
+            const SizedBox(height: 30),
+
           ],
         ),
       ),

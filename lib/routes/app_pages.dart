@@ -4,6 +4,7 @@ import '../screens/login_screen.dart';
 import '../screens/splash_screen.dart';
 import '../screens/forgotPassword_screen.dart';
 import '../screens/register_screen.dart';
+import '../screens/profile_screen.dart';
 import 'app_routes.dart';
 
 class AppPages {
@@ -13,5 +14,6 @@ class AppPages {
     AppRoutes.home: (context) => const HomeScreen(),
     AppRoutes.forgotPassword: (context) => const ForgotPasswordScreen(),
     AppRoutes.register: (context) => const RegisterScreen(),
+    AppRoutes.profile: (context) => const ProfileScreen(),
   };
 }

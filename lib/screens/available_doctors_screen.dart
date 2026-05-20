@@ -102,7 +102,7 @@ class AvailableDoctorsScreen extends StatelessWidget {
                 },
               ),
             ),
-            BottomNav(currentIndex: 0),
+            BottomNav(currentIndex: -1),
           ],
         ),
       ),

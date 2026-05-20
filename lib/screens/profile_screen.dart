@@ -96,7 +96,7 @@ class ProfileScreen extends StatelessWidget {
             const Spacer(),
 
             // BOTTOM NAV
-            BottomNav(currentIndex: 0),
+            BottomNav(currentIndex: 2),
           ],
         ),
       ),

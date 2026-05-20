@@ -96,6 +96,8 @@ class _AppointmentsScreenState extends State<AppointmentsScreen>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+
+          // DOCTOR INFO ROW
           Row(
             children: [
               ClipRRect(
@@ -106,11 +108,15 @@ class _AppointmentsScreenState extends State<AppointmentsScreen>
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text("Dr. Abhishek",
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+                  const Text(
+                    "Dr. Abhishek",
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                  ),
                   const SizedBox(height: 4),
-                  const Text("Today, 07:00 PM",
-                      style: TextStyle(color: Colors.grey, fontSize: 13)),
+                  const Text(
+                    "Today, 07:00 PM",
+                    style: TextStyle(color: Colors.grey, fontSize: 13),
+                  ),
                   const SizedBox(height: 4),
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
@@ -131,7 +137,10 @@ class _AppointmentsScreenState extends State<AppointmentsScreen>
               ),
             ],
           ),
+
           const SizedBox(height: 14),
+
+          // RESCHEDULE + SEE DETAILS
           Row(
             children: [
               Expanded(
@@ -143,8 +152,10 @@ class _AppointmentsScreenState extends State<AppointmentsScreen>
                       borderRadius: BorderRadius.circular(10),
                     ),
                   ),
-                  child: const Text("Reschedule",
-                      style: TextStyle(color: Colors.black)),
+                  child: const Text(
+                    "Reschedule",
+                    style: TextStyle(color: Colors.black),
+                  ),
                 ),
               ),
               const SizedBox(width: 10),
@@ -157,12 +168,40 @@ class _AppointmentsScreenState extends State<AppointmentsScreen>
                       borderRadius: BorderRadius.circular(10),
                     ),
                   ),
-                  child: const Text("See Details",
-                      style: TextStyle(color: Colors.white)),
+                  child: const Text(
+                    "See Details",
+                    style: TextStyle(color: Colors.white),
+                  ),
                 ),
               ),
             ],
           ),
+
+          const SizedBox(height: 8),
+
+          // MESSAGE DOCTOR
+          SizedBox(
+            width: double.infinity,
+            child: OutlinedButton.icon(
+              onPressed: () => Navigator.pushNamed(context, AppRoutes.chat),
+              style: OutlinedButton.styleFrom(
+                side: const BorderSide(color: Color(0xff4a7957)),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+              icon: const Icon(
+                Icons.chat_outlined,
+                color: Color(0xff4a7957),
+                size: 18,
+              ),
+              label: const Text(
+                "Message Doctor",
+                style: TextStyle(color: Color(0xff4a7957)),
+              ),
+            ),
+          ),
+
         ],
       ),
     );

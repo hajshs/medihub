@@ -1,64 +1,40 @@
 import 'package:flutter/material.dart';
-import 'routes/app_pages.dart';
-import 'routes/app_routes.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:provider/provider.dart';
+import 'config/supabase_config.dart';
+import 'config/router.dart';
+import 'providers/auth_provider.dart';
+import 'theme/app_theme.dart';
 
-void main() {
-  runApp(const MyApp());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Supabase.initialize(
+    url: SupabaseConfig.supabaseUrl,
+    anonKey: SupabaseConfig.supabaseAnonKey,
+  );
+
+  runApp(
+    ChangeNotifierProvider(
+      create: (_) => AuthProvider(),
+      child: const MediHubApp(),
+    ),
+  );
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class MediHubApp extends StatelessWidget {
+  const MediHubApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
+    final authProvider = context.watch<AuthProvider>();
+    final router = createRouter(authProvider);
+
+    return MaterialApp.router(
       title: 'MediHub',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xff4a7957),
-        ),
-        useMaterial3: true,
-      ),
-      initialRoute: AppRoutes.splash,
-      onGenerateRoute: (settings) {
-        final builder = AppPages.routes[settings.name];
-        if (builder == null) return null;
-
-        // Bottom nav screens — no animation (feels like tabs)
-        const noTransitionRoutes = [
-          AppRoutes.home,
-          AppRoutes.appointments,
-          AppRoutes.profile,
-        ];
-
-        if (noTransitionRoutes.contains(settings.name)) {
-          return PageRouteBuilder(
-            settings: settings,
-            pageBuilder: (_, __, ___) => builder(context),
-            transitionDuration: Duration.zero,
-            reverseTransitionDuration: Duration.zero,
-          );
-        }
-
-        // All other screens — slide up from bottom
-        return PageRouteBuilder(
-          settings: settings,
-          pageBuilder: (_, animation, __) => builder(context),
-          transitionsBuilder: (_, animation, __, child) {
-            return SlideTransition(
-              position: Tween<Offset>(
-                begin: const Offset(1.0, 0.0),
-                end: Offset.zero,
-              ).animate(CurvedAnimation(
-                parent: animation,
-                curve: Curves.easeInOut,
-              )),
-              child: child,
-            );
-          },
-        );
-      },
+      debugShowCheckedModeBanner: false,
+      theme: AppTheme.lightTheme,
+      routerConfig: router,
     );
   }
 }
